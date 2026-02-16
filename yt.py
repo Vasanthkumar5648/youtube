@@ -12,8 +12,6 @@ from reportlab.lib import colors
 from datetime import datetime
 import io
 
-# ---------------- Helpers ---------------- #
-
 def extract_video_id(url: str):
     match = re.search(r"(?:v=|youtu\.be/)([a-zA-Z0-9_-]{11})", url)
     return match.group(1) if match else None
@@ -45,7 +43,6 @@ def chunk_text(text: str, chunk_size: int = 1200):
 
     return chunks
 
-# ---------------- Model (cached) ---------------- #
 
 @st.cache_resource
 def load_model():
@@ -100,7 +97,6 @@ def summarize_video(tokenizer, model, device, transcript: str):
     full_summary = "\n\n".join(full_summary_parts)
     return section_notes, full_summary
 
-# ---------------- PDF Generation ---------------- #
 
 def create_pdf(video_id: str, full_summary: str, section_notes: list):
     """
@@ -188,7 +184,6 @@ def create_pdf(video_id: str, full_summary: str, section_notes: list):
     pdf_buffer.seek(0)
     return pdf_buffer
 
-# ---------------- Streamlit UI ---------------- #
 
 def main():
     st.set_page_config(page_title="YouTube Notes & Summary", layout="wide")
